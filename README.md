@@ -40,44 +40,21 @@ it.
 Check that it loaded:
 
 ```bash
-claude plugin list                        # decision-modeling@feral-lab-os, Status: enabled
-claude plugin details decision-modeling   # Component inventory lists the three skills
+claude plugin list
 ```
+
+You should see `decision-modeling@feral-lab-os` with `Status: enabled`. Then start
+`claude`, type `/`, and look for `dm-calibration`, `lab-conventions` and
+`model-code-review`.
 
 If your machine has no GitHub SSH key, set `CLAUDE_CODE_PLUGIN_PREFER_HTTPS=1` in your
 environment so Claude Code clones over HTTPS. The repository is public, so no GitHub
 account is needed.
 
-## Releasing
+## Update
 
-Maintainers follow these steps for every change to a skill.
-
-1. **Make the change on a branch** and open a pull request. `main` is protected.
-2. **Bump the version** in `plugins/decision-modeling/.claude-plugin/plugin.json` using semantic versioning:
-   - patch (0.1.0 to 0.1.1): wording fixes, clarifications
-   - minor (0.1.0 to 0.2.0): new guidance, a new skill, changed behavior
-   - major (0.x to 1.0.0): a renamed or removed skill
-3. **Validate** before merging:
-   ```bash
-   claude plugin validate .
-   ```
-4. **Merge, then tag the release** from `main`:
-   ```bash
-   git checkout main && git pull
-   git tag decision-modeling--vX.Y.Z
-   git push origin decision-modeling--vX.Y.Z
-   ```
-   Add a short GitHub release note saying what changed and whether users need to do anything.
-5. **Re-upload any skill you also keep on claude.ai.** Skills uploaded to claude.ai do not update from this repo. If you changed one, zip it and upload it again in claude.ai skill settings, replacing the old copy:
-   ```bash
-   cd plugins/decision-modeling/skills
-   zip -r ~/Desktop/<skill-name>.zip <skill-name>
-   ```
-   An out-of-date copy on claude.ai will also sync into Claude Code and run alongside the plugin version.
-
-### Getting updates (lab members)
-
-In Terminal (not Positron or the desktop app):
+A new release reaches you only when the plugin's `version` changes. To update, run these in
+Terminal (not in the chat panel of Positron, VS Code or the desktop app):
 
 ```bash
 claude plugin marketplace update feral-lab-os
@@ -85,23 +62,6 @@ claude plugin update decision-modeling@feral-lab-os
 ```
 
 Then start a new Claude Code session.
-
-## Update
-
-A new release reaches you only when the plugin's `version` changes. To update by hand, run
-this in a session:
-
-```
-/plugin marketplace update feral-lab-os
-```
-
-or this in your shell:
-
-```bash
-claude plugin update decision-modeling@feral-lab-os
-```
-
-Then run `/reload-plugins` in an open session, or start a new one.
 
 ### Turn on auto-update
 
@@ -117,7 +77,7 @@ Setting `DISABLE_AUTOUPDATER=1`, `DISABLE_UPDATES=1` or
 `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` turns plugin auto-update off, unless you also
 set `FORCE_AUTOUPDATE_PLUGINS=1`.
 
-## Get notified of new releases
+### Get notified of new releases
 
 Each version is published as a GitHub release, with notes taken from
 [CHANGELOG.md](CHANGELOG.md). To get notified, open this repository on GitHub, click
@@ -125,13 +85,59 @@ Each version is published as a GitHub release, with notes taken from
 
 ## Contributing
 
-`main` is protected, so changes come in as pull requests. A pull request that changes a skill
-should also:
+Anyone can propose a change to a skill. `main` is protected, so every change comes in as a
+pull request.
 
-1. Raise `version` in `plugins/decision-modeling/.claude-plugin/plugin.json`. Without this,
-   installed copies don't update.
-2. Add an entry to `CHANGELOG.md`.
-3. Pass `claude plugin validate --strict .` from the repository root.
+1. **Create a branch:**
+   ```bash
+   git checkout -b <short-description>
+   ```
+2. **Edit the skill** under `plugins/decision-modeling/skills/<skill-name>/`.
+3. **Add an entry to [CHANGELOG.md](CHANGELOG.md)** under a `## [Unreleased]` heading at the
+   top (add the heading if it is not there). Say what changed and whether users need to do
+   anything.
+4. **Validate** from the repository root:
+   ```bash
+   claude plugin validate .
+   ```
+5. **Push the branch and open a pull request.**
+
+Leave the version in `plugin.json` alone; a maintainer sets it at release time.
+
+## Releasing (maintainers)
+
+After a Contributing PR is merged:
+
+1. **Bump the version.** Because `main` is protected, do this in a small release pull
+   request. Raise `version` in `plugins/decision-modeling/.claude-plugin/plugin.json` using
+   semantic versioning:
+   - patch (0.1.0 to 0.1.1): wording fixes, clarifications
+   - minor (0.1.0 to 0.2.0): new guidance, a new skill, changed behavior
+   - major (0.x to 1.0.0): a renamed or removed skill
+
+   In the same pull request, rename `## [Unreleased]` in `CHANGELOG.md` to
+   `## [X.Y.Z] - YYYY-MM-DD`. Then merge it.
+2. **Tag the release** from `main`:
+   ```bash
+   git checkout main && git pull
+   claude plugin tag plugins/decision-modeling
+   git push origin --tags
+   ```
+   `claude plugin tag` reads the version from `plugin.json`, checks that it agrees with the
+   marketplace entry, and tags the current commit `decision-modeling--vX.Y.Z`. It stops if
+   the working tree has uncommitted changes or the tag already exists.
+3. **Publish a GitHub release** for the new tag. On GitHub, open **Releases**, choose
+   **Draft a new release**, select the tag, and paste that version's entry from
+   `CHANGELOG.md` as the notes.
+4. **Re-upload any skill you also keep on claude.ai.** Skills uploaded to claude.ai do not
+   update from this repo. If you changed one, zip it and upload it again in claude.ai skill
+   settings, replacing the old copy:
+   ```bash
+   cd plugins/decision-modeling/skills
+   zip -r ~/Desktop/<skill-name>.zip <skill-name>
+   ```
+   An out-of-date copy on claude.ai will also sync into Claude Code and run alongside the
+   plugin version.
 
 ## Credits
 
