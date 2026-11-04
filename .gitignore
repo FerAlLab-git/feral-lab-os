@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# R and RStudio
+.Rhistory
+.RData
+.Rproj.user/
+.Renviron
+
+# Local environment and secrets
+.env
+.env.*
+
+# Packaged skill archives are build artifacts
+*.zip

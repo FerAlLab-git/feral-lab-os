@@ -1,0 +1,41 @@
+[
+  {"query": "I'm building a natural history model of bladder cancer and need to fit the progression rates to SEER age-specific incidence plus the stage distribution at diagnosis. I have cases and person-years for 18 age bands. Where do I even start with setting this up in R?", "should_trigger": true},
+
+  {"query": "my IMIS run finishes but the ESS column ends up around 40 out of 1000 and maxweight stays at like 0.3. 11 parameters. is that salvageable or do i need a different algorithm", "should_trigger": true},
+
+  {"query": "Calibrated a 3-state model to survival data. Posterior mean is 0.088/0.084, the credible intervals cover basically the entire prior, and the two params correlate at -0.97. But the best-fitting set matches the targets almost perfectly. I don't understand what the posterior is telling me.", "should_trigger": true},
+
+  {"query": "Before I burn three days of cluster time — is there a way to check whether my prior ranges can even produce my calibration targets, and whether 5 parameters is too many for the 2 targets I've got?", "should_trigger": true},
+
+  {"query": "We have an existing calibration in R-labs that fits to survival only. Reviewer wants us to also match disease prevalence over time. What do I need to change in the likelihood and does adding it change how I should weight things?", "should_trigger": true},
+
+  {"query": "my incidence targets are counts per age group and the model gives me a rate. right now im using dnorm on the rates with SEs i calculated but the fit is completely dominated by the 75+ age groups and the residuals look way overdispersed. what likelihood should i actually be using", "should_trigger": true},
+
+  {"query": "Three of the transition probabilities in my cSTM can't be measured directly — there's no study that reports them. I do have registry data on prevalence and mortality. How do I go about estimating the three from that?", "should_trigger": true},
+
+  {"query": "Each evaluation of my microsimulation takes about 4 seconds and the calibration needs maybe 50k evaluations. Should I be parallelising the likelihood across the parameter sets, and if so how do I set that up so it works on both my mac and the linux cluster?", "should_trigger": true},
+
+  {"query": "ran optim with Nelder-Mead from 100 random starting points on my sick-sicker model. they all converge to the same log-likelihood value but two totally different parameter vectors depending on where they start. is my optimiser broken?", "should_trigger": true},
+
+  {"query": "I'm writing the calibration lab for my decision-modeling course next quarter. Want to walk them through random search then Nelder-Mead then a Bayesian method on the same toy model, and show why the Bayesian one is worth the extra effort. Can you draft the scripts?", "should_trigger": true},
+
+  {"query": "I fit a logistic regression to predict 30-day readmission and the reviewers want calibration assessed. Can you help me produce a calibration plot with the calibration slope and intercept, plus the Brier score and a Hosmer-Lemeshow test?", "should_trigger": false},
+
+  {"query": "Here's my calibration script from a project two years ago — R/calibrate_imis.R, about 400 lines. It works but takes 6 hours. Can you look through it and tell me if there are bugs and where the time is going?", "should_trigger": false},
+
+  {"query": "My model is already calibrated and I've got 1000 posterior parameter sets saved. Now I need to run the PSA, produce a CEAC and compute the expected value of perfect information across a range of willingness-to-pay thresholds.", "should_trigger": false},
+
+  {"query": "Need to write the Methods paragraph describing our calibration approach for the MDM submission. We used IMIS with uniform priors over 6 parameters and 4 target series. Draft about 250 words with the right level of technical detail for that journal?", "should_trigger": false},
+
+  {"query": "Reviewer 2 says our calibration targets were 'selected post hoc to favour the intervention arm' which is not true, we prespecified them. How should I phrase the response without sounding defensive?", "should_trigger": false},
+
+  {"query": "I've got individual-level cohort data in a data.table, about 40k rows, and want to fit a Weibull survival model with age and stage as covariates, then use the fitted parameters somewhere else. Which package and what's the syntax?", "should_trigger": false},
+
+  {"query": "why does my markov trace stop summing to 1 around cycle 40? the row sums drift to like 0.9997 and then it gets worse. transition matrix is built in Functions_markov.R", "should_trigger": false},
+
+  {"query": "Two strategies, costs and QALYs from my model. I need incremental cost-effectiveness ratios, the efficiency frontier with dominated strategies removed, and a net monetary benefit table at 50k and 100k per QALY.", "should_trigger": false},
+
+  {"query": "our lab spectrophotometer drifts and needs recalibrating against the standard curve every few weeks. is there an R workflow for fitting the standard curve and flagging when readings go out of tolerance?", "should_trigger": false},
+
+  {"query": "Can you explain what a hazard ratio actually means to a policy audience with no stats background? Writing a one-paragraph plain-language summary for a policy brief.", "should_trigger": false}
+]

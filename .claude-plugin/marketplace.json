@@ -1,0 +1,14 @@
+{
+  "name": "feral-lab-os",
+  "description": "Claude Code plugins for health decision science from FerAl Lab",
+  "owner": {
+    "name": "FerAl Lab"
+  },
+  "plugins": [
+    {
+      "name": "decision-modeling",
+      "source": "./plugins/decision-modeling",
+      "description": "Skills for building, calibrating and reviewing decision-analytic models in R, following the DARTH coding framework"
+    }
+  ]
+}

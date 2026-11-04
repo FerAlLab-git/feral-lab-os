@@ -1,0 +1,33 @@
+{
+  "skill_name": "dm-calibration",
+  "evals": [
+    {
+      "id": 0,
+      "name": "build-calibration-from-scratch",
+      "prompt": "I've got a 4-state Sick-Sicker Markov model in R at R-labs/04-calibration/SickSicker_MarkovModel_Function.R and calibration targets in R-labs/04-calibration/SickSicker_CalibTargets.RData. Three params need calibrating (p_S1S2, hr_S1, hr_S2) against three targets (survival, prevalence, proportion sick). Can you write me the calibration script? I want the full posterior, not just a best fit, because this feeds a PSA later.",
+      "expected_output": "A Bayesian calibration script. Should verify model output aligns with target rows, index bounds by name not position, build the log-likelihood in log space, handle infeasible parameter sets with -Inf, include identifiability diagnostics, and note that the targets carry counts so a binomial likelihood is available.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "diagnose-suspicious-posterior",
+      "prompt": "Something's off with my calibration. Two transition probabilities, one survival target, IMIS with 1000 draws. Posterior mean comes out 0.088 and 0.084, the 95% CrIs are both basically the whole prior range (0.045-0.146), and the correlation between them is -0.97. The model fits the targets beautifully at the best-fitting set though. What's going on and what do I do about it?",
+      "expected_output": "Should diagnose non-identifiability / bimodality rather than treating it as an imprecision or convergence problem. Should propose the posterior-mean-vs-MAP fit comparison and the parameter swap test as diagnostics, and give remedies in order (add a target, fix a parameter, constrain in BOTH prior sampler and density with renormalization, or report modes separately).",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "choose-method-and-extend",
+      "prompt": "Right now I calibrate with a 1000-draw Latin hypercube random search and just take the best-fitting set. I need to add a second calibration target and I'm being asked for credible intervals on the calibrated params. Should I move to Nelder-Mead or something Bayesian? I've been using IMIS but on my bigger model with 11 parameters the ESS collapses and one weight dominates — someone suggested BayesianTools with the DEzs sampler. Also the whole thing takes 40 seconds to run, would parallelising the likelihood help?",
+      "expected_output": "Should recommend Bayesian given CrIs are required and note Nelder-Mead's Hessian CI is local/asymptotic. Should correctly read the collapsing ESS / dominant weight as IMIS degenerating in higher dimension and recommend DEzs, with a runnable createBayesianSetup/runMCMC call, gelmanDiagnostics, getSample with burn-in, and the unnamed-vector gotcha. Should flag implicit weighting across targets of different sizes. On parallelism: push back given 40s total runtime, advise timing serial first, and warn against nesting sampler-level and likelihood-level parallelism.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "natural-history-target-types",
+      "prompt": "I'm calibrating a bladder cancer natural history model. Targets are SEER age-specific incidence (cases and person-years for 18 age groups), stage distribution at diagnosis (4 stages), and prevalence of preclinical disease from an autopsy series. Currently everything is a normal likelihood on the proportions/rates with SEs I computed. The incidence fit is dominated by the oldest age groups and I suspect the data are more variable than my model allows. How should I set up the likelihood?",
+      "expected_output": "Should move incidence to Poisson with a person-years offset (and explain the rate-vs-count offset), recommend negative binomial with a dispersion parameter for the overdispersion, use multinomial for the 4-stage distribution (warning that dmultinom silently renormalises), binomial for preclinical prevalence. Should explain that the oldest-age dominance is a symptom of the constant-SE normal and resolves under a count likelihood. Should raise implicit weighting across 18 vs 4 vs 1 points, the shared-cases dependence between incidence and stage, and that preclinical prevalence is what identifies sojourn time.",
+      "files": []
+    }
+  ]
+}

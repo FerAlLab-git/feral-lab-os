@@ -1,0 +1,13 @@
+{
+  "name": "decision-modeling",
+  "version": "0.1.0",
+  "description": "Skills for building, calibrating and reviewing decision-analytic models in R, following the DARTH coding framework",
+  "author": {
+    "name": "FerAl Lab",
+    "url": "https://github.com/FerAlLab-git"
+  },
+  "homepage": "https://github.com/FerAlLab-git/feral-lab-os",
+  "repository": "https://github.com/FerAlLab-git/feral-lab-os",
+  "license": "MIT",
+  "keywords": ["decision-analysis", "cost-effectiveness", "calibration", "microsimulation", "r", "darth"]
+}
