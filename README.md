@@ -18,19 +18,24 @@ calibration and `model-code-review` is for reviewing code that already exists.
 
 ## Install
 
-You need Claude Code and `git`. In a Claude Code session:
+You need Claude Code and `git`. In a Claude Code session in a terminal:
 
 ```
 /plugin marketplace add FerAlLab-git/feral-lab-os
 /plugin install decision-modeling@feral-lab-os
 ```
 
-Or from your shell:
+**In Positron, VS Code or the desktop app**, the chat panel does not run `/plugin`.
+Install from Terminal instead:
 
 ```bash
 claude plugin marketplace add FerAlLab-git/feral-lab-os
 claude plugin install decision-modeling@feral-lab-os
 ```
+
+The same two commands work from any shell. The plugin is installed for your user, so it is
+then available in every Claude Code surface on that machine; start a new session to load
+it.
 
 Check that it loaded:
 
