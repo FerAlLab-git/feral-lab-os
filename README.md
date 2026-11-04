@@ -88,6 +88,8 @@ Each version is published as a GitHub release, with notes taken from
 Anyone can propose a change to a skill. `main` is protected, so every change comes in as a
 pull request.
 
+If you are not a member of FerAlLab-git, fork the repository first and open the pull request from your fork.
+
 1. **Create a branch:**
    ```bash
    git checkout -b <short-description>
@@ -102,30 +104,33 @@ pull request.
    ```
 5. **Push the branch and open a pull request.**
 
-Leave the version in `plugin.json` alone; a maintainer sets it at release time.
+Leave the version in `plugin.json` alone; a maintainer sets it before merging.
 
 ## Releasing (maintainers)
 
-After a Contributing PR is merged:
+For each Contributing PR you accept:
 
-1. **Bump the version.** Because `main` is protected, do this in a small release pull
-   request. Raise `version` in `plugins/decision-modeling/.claude-plugin/plugin.json` using
-   semantic versioning:
+1. **Bump the version on the pull request's branch, before merging.** Raise `version` in
+   `plugins/decision-modeling/.claude-plugin/plugin.json` using semantic versioning:
    - patch (0.1.0 to 0.1.1): wording fixes, clarifications
    - minor (0.1.0 to 0.2.0): new guidance, a new skill, changed behavior
    - major (0.x to 1.0.0): a renamed or removed skill
 
-   In the same pull request, rename `## [Unreleased]` in `CHANGELOG.md` to
-   `## [X.Y.Z] - YYYY-MM-DD`. Then merge it.
-2. **Tag the release** from `main`:
+   In the same commit, rename `## [Unreleased]` in `CHANGELOG.md` to
+   `## [X.Y.Z] - YYYY-MM-DD`. Then merge the pull request.
+
+   If you can't push to the contributor's branch (for example, a fork that does not allow
+   edits by maintainers), merge the pull request as it is and make these two changes in a
+   small release pull request instead.
+2. **Tag the release** from `main` once the version bump is merged:
    ```bash
    git checkout main && git pull
-   claude plugin tag plugins/decision-modeling
-   git push origin --tags
+   claude plugin tag --push plugins/decision-modeling
    ```
    `claude plugin tag` reads the version from `plugin.json`, checks that it agrees with the
-   marketplace entry, and tags the current commit `decision-modeling--vX.Y.Z`. It stops if
-   the working tree has uncommitted changes or the tag already exists.
+   marketplace entry, tags the current commit `decision-modeling--vX.Y.Z`, and with
+   `--push` pushes that tag to `origin`. It stops if the working tree has uncommitted
+   changes or the tag already exists.
 3. **Publish a GitHub release** for the new tag. On GitHub, open **Releases**, choose
    **Draft a new release**, select the tag, and paste that version's entry from
    `CHANGELOG.md` as the notes.
